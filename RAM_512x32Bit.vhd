@@ -26,16 +26,18 @@ END RAM_512x32Bit;
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF RAM_512x32Bit IS
 	TYPE mem_array IS ARRAY (0 TO ((2**9)-1)) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
-	SIGNAL mem: mem_array;
+	SIGNAL mem: mem_array := (OTHERS => (OTHERS => '0'));
+	SIGNAL temp : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 BEGIN
 	PROCESS(clk) 
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-			IF (we = '0') THEN
-				dataO <= mem(CONV_INTEGER(addr(8 DOWNTO 0)));
-			ELSE
+			IF (we = '1') THEN
 				mem(CONV_INTEGER(addr(8 DOWNTO 0))) <= dataI;
+			ELSE
+				temp <= mem(CONV_INTEGER(addr(8 DOWNTO 0)));
 			END IF;
 		END IF;
 	END PROCESS;
+	dataO <= temp;
 END Behavioral;

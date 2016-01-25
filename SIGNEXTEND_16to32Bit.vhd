@@ -20,15 +20,17 @@ END SIGNEXTEND_16to32Bit;
 -- ARCHITECTURE
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF SIGNEXTEND_16to32Bit IS
+SIGNAL temp : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 BEGIN
 	PROCESS(i)
 	BEGIN
 		IF i(15) = '0' THEN
-			o(31 DOWNTO 16) <= (OTHERS => '0');
+			temp(31 DOWNTO 16) <= (OTHERS => '0');
 		else
-			o(31 DOWNTO 16) <= (OTHERS => '1');
+			temp(31 DOWNTO 16) <= (OTHERS => '1');
 		END IF;
-		o(15 DOWNTO 0) <= i;
+		temp(15 DOWNTO 0) <= i;
 	END PROCESS;
+	o <= temp;
 END Behavioral;
 

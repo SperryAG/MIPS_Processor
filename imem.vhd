@@ -28,7 +28,7 @@ begin
 	begin
 		-- initialize memory from file
 		for i in 0 to 63 loop -- set all contents low
-		mem(i) := (others => '0');
+			mem(i) := (others => '0');
 		end loop;
 
 		index := 0;

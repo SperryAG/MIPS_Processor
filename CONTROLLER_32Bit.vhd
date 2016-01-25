@@ -27,23 +27,30 @@ END CONTROLLER_32Bit;
 -- ARCHITECTURE
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF CONTROLLER_32Bit IS
+SIGNAL mtr, mw, b, as, rd, rw : STD_LOGIC := '0';
+SIGNAL ac : STD_LOGIC_VECTOR(5 DOWNTO 0) := (OTHERS => '0');
 BEGIN
     PROCESS (Func, Op)
 	BEGIN
         -- R-TYPE Instructions
         ----------------------------
 		IF (Op = "000000") THEN
-			MemToReg   <= '1';
-         MemWrite   <= '0';
-         Branch     <= '0';
-         ALUControl <= Func;
-         ALUSrc     <= '0';
-         RegDst     <= '1';
-         RegWrite   <= '1';
+			mtr <= '1';
+         mw  <= '0';
+         b   <= '0';
+         ac  <= Func;
+         as  <= '0';
+         rd  <= '1';
+         rw  <= '1';
             
         -- J-TYPE Instructions
         ----------------------------
 		ELSIF (Op(5 DOWNTO 1) = "00001") THEN
+			IF (Op(0) = '0') THEN
+			
+			ELSE
+			
+			END IF;
             
         -- Coprocessor Instructions
         ----------------------------
@@ -53,31 +60,38 @@ BEGIN
         ----------------------------
 		ELSE
 			IF (Op = "100011") THEN --lw
-				MemToReg   <= '1';
-				MemWrite   <= '0';
-				Branch     <= '0';
-				ALUControl <= Func;
-				ALUSrc     <= '1';
-				RegDst     <= '0';
-				RegWrite   <= '1';
+				mtr <= '0';
+				mw  <= '0';
+				b   <= '0';
+				ac  <= "100000";
+				as  <= '1';
+				rd  <= '0';
+				rw  <= '1';
 			ELSIF (Op = "101011") THEN --sw
-				MemToReg   <= '0'; -- dont care
-				MemWrite   <= '1';
-				Branch     <= '0';
-				ALUControl <= Func;
-				ALUSrc     <= '1';
-				RegDst     <= '0'; -- dont care
-				RegWrite   <= '0';
+				mtr <= '0'; -- dont care
+				mw  <= '1';
+				b   <= '0';
+				ac  <= "100000";
+				as  <= '1';
+				rd  <= '0'; -- dont care
+				rw  <= '0';
 			ELSIF (Op = "001000") THEN --addi
-				MemToReg   <= '1';
-				MemWrite   <= '0';
-				Branch     <= '0';
-				ALUControl <= Func;
-				ALUSrc     <= '1';
-				RegDst     <= '0';
-				RegWrite   <= '1';		
+				mtr <= '1';
+				mw  <= '0';
+				b   <= '0';
+				ac  <= "100000";
+				as  <= '1';
+				rd  <= '0';
+				rw  <= '1';		
 			END IF;
        END IF;
 	END PROCESS;
+	MemToReg <= mtr;
+	MemWrite <= mw;
+	Branch <= b;
+	ALUControl <= ac;
+	ALUSrc <= as;
+	RegDst <= rd;
+	RegWrite <= rw;
 END Behavioral;
 

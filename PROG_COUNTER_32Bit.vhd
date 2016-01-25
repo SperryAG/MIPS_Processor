@@ -21,11 +21,13 @@ END PROG_COUNTER_32Bit;
 -- ARCHITECTURE
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF PROG_COUNTER_32Bit IS
+SIGNAL data : std_logic_vector(31 DOWNTO 0) := (OTHERS => '0');
 BEGIN
 	PROCESS (clk)
 	BEGIN
 		IF (clk'EVENT AND clk='1') THEN
-			dataO <= dataI;
+			data <= dataI;
 		END IF;
 	END PROCESS;
+	dataO <= data;
 END Behavioral;

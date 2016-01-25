@@ -30,7 +30,7 @@ END REGFILE_32BitX5Bit;
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF REGFILE_32BitX5Bit IS
 	TYPE mem_array IS ARRAY (0 TO (2**5-1)) OF STD_LOGIC_VECTOR (31 DOWNTO 0);
-	SIGNAL mem: mem_array := ((OTHERS => (OTHERS => '0')));
+	SIGNAL mem: mem_array := (others => (others => '0'));	
 BEGIN
 	PROCESS(clk) 
 	BEGIN

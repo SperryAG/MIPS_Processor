@@ -13,8 +13,27 @@ USE WORK.PROCESSOR_PKG.ALL;
 ----------------------------------------------------------------------------------
 ENTITY PROCESSOR_32Bit IS
 	PORT(
-		ref_clk : INOUT std_logic;
-		reset   : INOUT std_logic 
+		ref_clk : IN std_logic;
+		reset   : IN std_logic;
+		-- Test Ports
+		t_pc_out           : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_adder_out        : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_rom_out          : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_muxA_out         : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
+		t_contRegDst_out   : OUT STD_LOGIC;
+		t_contBranch_out   : OUT STD_LOGIC;
+		t_contMemToReg_out : OUT STD_LOGIC;
+		t_contFunc_out     : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
+		t_contMemWrite_out : OUT STD_LOGIC;
+		t_contALUSrc_out   : OUT STD_LOGIC;
+		t_contRegWrite_out : OUT STD_LOGIC;
+		t_regData1_out     : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_regData2_out     : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_signExtend_out   : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_muxB_out         : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_alu_out          : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_ram_out          : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+		t_muxC_out         : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 	);
 END PROCESSOR_32Bit;
 ----------------------------------------------------------------------------------
@@ -74,11 +93,11 @@ BEGIN
 	);
 	
 	-- Instantiate Preload
-	Inst_imem : imem
-	PORT MAP(
-		a => w02(5 DOWNTO 0),
-		rd => w03
-	);
+	--Inst_imem : imem
+	--PORT MAP(
+	--	a => w02(5 DOWNTO 0),
+	--	rd => w03
+	--);
 	
    --Instantiate MUXA
 	Inst_MUX_2to1_5Bit_A: MUX_2to1_5Bit 
@@ -165,5 +184,25 @@ BEGIN
 	
 	w21 <= ref_clk;
 	w22 <= reset;
+	--Testing
+	t_pc_out <= w02;
+	t_adder_out <= w01;
+	t_rom_out <= w03;
+	t_muxA_out <= w04;
+	t_contRegDst_out <= w05;
+	t_contBranch_out <= w06;
+	t_contMemToReg_out <= w07;
+	t_contFunc_out <= w09;
+	t_contMemWrite_out <= w08;
+	t_contALUSrc_out <= w10;
+	t_contRegWrite_out <= w11;
+	t_regData1_out <= w12;
+	t_regData2_out <= w13;
+	t_signExtend_out <= w14;
+	t_muxB_out <= w15;
+	t_alu_out <= w18;
+	t_ram_out <= w19;
+	t_muxC_out <= w20;
+	
 END Behavioral;
 

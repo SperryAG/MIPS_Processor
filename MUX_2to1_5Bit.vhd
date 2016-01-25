@@ -22,13 +22,15 @@ END MUX_2to1_5Bit;
 -- ARCHITECTURE
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF MUX_2to1_5Bit IS
+SIGNAL val : STD_LOGIC_VECTOR(4 DOWNTO 0) := (OTHERS => '0');
 BEGIN
-	PROCESS (sel)
+	PROCESS(sel, d0, d1)
 	BEGIN
 		IF sel = '0' THEN
-			o <= d0;
+			val <= d0;
 		ELSE
-			o <= d1;
+			val <= d1;
 		END IF;
 	END PROCESS;
+	o <= val;
 END Behavioral;

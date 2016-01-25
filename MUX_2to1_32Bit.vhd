@@ -22,14 +22,16 @@ END MUX_2to1_32Bit;
 -- ARCHITECTURE
 ----------------------------------------------------------------------------------
 ARCHITECTURE Behavioral OF MUX_2to1_32Bit IS
+SIGNAL val : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 BEGIN
-	PROCESS (sel)
+	PROCESS(sel, d0, d1)
 	BEGIN
 		IF sel = '0' THEN
-			o <= d0;
-		ELSE
-			o <= d1;
+			val <= d0;
+		ELSIF sel = '1' THEN
+			val <= d1;
 		END IF;
 	END PROCESS;
+	o <= val;
 END Behavioral;
 
